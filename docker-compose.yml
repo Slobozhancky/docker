@@ -1,9 +1,31 @@
 version: '3.8'
 
+volumes:
+  mysql_db-volumes:
+    driver: local
+
+networks:
+  php_advanced:
+    driver: bridge
+
 services:
   php:
     image: "php:8.1-apache"
     ports:
-      - "8081:80"
+      - "8080:80"
     volumes:
       - .:/var/www/html
+    networks:
+      - php_advanced
+
+  db:
+    image: "mysql:8"
+    restart: always
+    ports:
+      - "36061:3606"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - "mysql_db-volumes:/var/lib/mysql"
+    networks:
+      - php_advanced
