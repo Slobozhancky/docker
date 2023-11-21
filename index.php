@@ -65,20 +65,38 @@ class ValueObject {
         $blue = mt_rand(0, 255);
 
         $randomColor = new self();
-        var_dump($randomColor);
+
         $randomColor->setRed($red);
         $randomColor->setGreen($green);
         $randomColor->setBlue($blue);
 
         return $randomColor;
     }
+    public function mix($red, $green, $blue): Object
+    {
+        $avgRed = avg($red, $this->getRed());
+        $avgGreen = avg($green, $this->getGreen());
+        $avgBlue = avg($blue, $this->getBlue());
+
+        $mix = new ValueObject();
+
+        $mix->setRed($avgRed);
+        $mix->setGreen($avgGreen);
+        $mix->setBlue($avgBlue);
+
+        return $mix;
+    }
+}
+
+function avg(int $num1, int $num2): int {
+    return ($num1 + $num2) / 2;
 }
 
 $color_1 = new ValueObject();
 
-$color_1->setRed(12);
-$color_1->setGreen(10);
-$color_1->setBlue(55);
+$color_1->setRed(250);
+$color_1->setGreen(250);
+$color_1->setBlue(250);
 
 $color_2 = new ValueObject();
 
@@ -90,4 +108,5 @@ echo $color_1->equals($color_2);
 
 $color_3 = ValueObject::random();
 
-var_dump($color_3);
+var_dump($color_1->mix(100,300,100));
+
