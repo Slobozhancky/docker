@@ -1,21 +1,43 @@
 <?php
-phpinfo();
-?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>docker</title>
-</head>
-<body>
+require_once __DIR__ . '/vendor/autoload.php';
 
-<h1>Hello world</h1>
-<h1>Hello world</h1>
-<h1>Hello world</h1>
+trait Trait1
+{
+    public function test(): int
+    {
+        return 1;
+    }
+}
 
-</body>
-</html>
+trait Trait2
+{
+    public function test(): int
+    {
+        return 2;
+    }
+}
+trait Trait3
+{
+    public function test(): int
+    {
+        return 3;
+    }
+}
+class Test
+{
+    use Trait1, Trait2, Trait3 {
+        Trait1::test insteadof Trait2, Trait3;
+        Trait2::test as t2;
+        Trait3::test as t3;
+    }
+
+    public function getSum(): int
+    {
+        return $this->test() + $this->t2() + $this->t3();
+    }
+}
+
+$test_1 = new Test();
+
+d($test_1->getSum());
