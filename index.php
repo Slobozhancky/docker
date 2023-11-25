@@ -40,7 +40,7 @@ class User {
     public function __call($name, $arg){
         try {
             return match ($name) {
-                "setName", "setAge", "getName", "getAge" => $arg,
+                "getName", "getAge" => $arg,
                 default => throw new Exception("This method {$name} does not exist"),
             };
         }catch (Exception $e){
