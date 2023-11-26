@@ -2,15 +2,23 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class Logger
+interface iLogger
 {
+    public function log($string);
 
+    public function format($string);
+
+    public function deliver($format);
+}
+
+class Logger implements iLogger
+{
     private $format;
     private $delivery;
 
     public function __construct($format, $delivery)
     {
-        $this->format   = $format;
+        $this->format = $format;
         $this->delivery = $delivery;
     }
 
