@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 interface iLogger
@@ -71,6 +70,7 @@ class Logger implements iLogger
                 }
                 break;
             default:
+            
             {
                 die('Error deliver');
             }
@@ -81,4 +81,3 @@ class Logger implements iLogger
 
 $logger = new Logger('raw', 'by_sms');
 $logger->log('Emergency error! Please fix me!');
-
