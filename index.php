@@ -12,7 +12,10 @@ class ProductData
     public function set($name, $value)
     {
     }
+}
 
+class ProductDataManager
+{
     public function save()
     {
     }
@@ -42,10 +45,13 @@ class ProductHandler
     private $productData;
     private $getProductInfo;
 
-    public function __construct(ProductData $productData, GetProductInfo $getProductInfo)
+    private $productDataManager;
+
+    public function __construct(ProductData $productData, GetProductInfo $getProductInfo, ProductDataManager $productDataManager)
     {
         $this->productData = $productData;
         $this->getProductInfo = $getProductInfo;
+        $this->productDataManager = $productDataManager;
     }
 }
 
@@ -53,6 +59,8 @@ $prod = new ProductData();
 
 $prodInfo = new GetProductInfo();
 
-$prodHand = new ProductHandler($prod, $prodInfo);
+$prodManger = new ProductDataManager();
+
+$prodHand = new ProductHandler($prod, $prodInfo, $prodManger);
 
 d($prodHand);
