@@ -64,8 +64,8 @@ class DeliveredConsole implements iDelivered
 
 class Logger
 {
-    private $formatter;
-    private $delivered;
+    private iFormatter $formatter;
+    private iDelivered $delivered;
 
     public function __construct(iFormatter $formatter, iDelivered $delivered)
     {
@@ -74,7 +74,7 @@ class Logger
         $this->delivered = $delivered;
     }
 
-    public function log($string):string
+    public function log($string): string
     {
         return $this->delivered->deliver($this->formatter->format($string));
     }
