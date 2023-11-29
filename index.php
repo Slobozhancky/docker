@@ -49,12 +49,12 @@ class LuxTaxi implements Taxi
     }
 }
 
-interface TaxiFactory
+abstract class TaxiFactory
 {
-    public function createTaxi(): Taxi;
+    abstract public function createTaxi(): Taxi;
 }
 
-class EconomyTaxiFactory implements TaxiFactory
+class EconomyTaxiFactory extends TaxiFactory
 {
     public function createTaxi(): Taxi
     {
@@ -62,7 +62,7 @@ class EconomyTaxiFactory implements TaxiFactory
     }
 }
 
-class StandartTaxiFactory implements TaxiFactory
+class StandartTaxiFactory extends TaxiFactory
 {
     public function createTaxi(): Taxi
     {
@@ -70,7 +70,7 @@ class StandartTaxiFactory implements TaxiFactory
     }
 }
 
-class LuxTaxiFactory implements TaxiFactory
+class LuxTaxiFactory extends TaxiFactory
 {
     public function createTaxi(): Taxi
     {
