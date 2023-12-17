@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Core
+class Controller
 {
 
 }

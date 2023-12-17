@@ -1,7 +1,10 @@
 <?php
 
 namespace app\controllers;
-class UsersController
+
+use core\Controller;
+
+class UsersController extends Controller
 {
 
 }
