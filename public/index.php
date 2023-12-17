@@ -1,8 +1,6 @@
 <?php
-define('BASE_DIR', dirname(__DIR__));
 
-require_once BASE_DIR . '/config/constants.php';
-require_once BASE_DIR . '/vendor/autoload.php';
+require_once dirname(__DIR__) . "/config/config.php";
 
 try {
     if (!preg_match('/assets/i', $_SERVER['REQUEST_URI'])){

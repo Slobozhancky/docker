@@ -1,3 +1,5 @@
 <?php
 
-//define('BASE_DIR', dirname(__DIR__));
+define('ROOT', dirname(__DIR__));
+
+require_once ROOT . '/vendor/autoload.php';
