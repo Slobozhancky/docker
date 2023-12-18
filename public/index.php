@@ -11,4 +11,3 @@ try {
 } catch (Exception $exception) {
     dd("Exception", $exception);
 }
-

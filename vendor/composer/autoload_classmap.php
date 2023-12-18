@@ -73,4 +73,7 @@ return array(
     'Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait' => $vendorDir . '/symfony/var-dumper/Test/VarDumperTestTrait.php',
     'Symfony\\Component\\VarDumper\\VarDumper' => $vendorDir . '/symfony/var-dumper/VarDumper.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
+    'app\\controllers\\UsersController' => $baseDir . '/app/controllers/UsersController.php',
+    'core\\Controller' => $baseDir . '/core/Controller.php',
+    'core\\Routers' => $baseDir . '/core/Routers.php',
 );

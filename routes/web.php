@@ -1,13 +1,40 @@
 <?php
 
-use core\Routers;
+use core\Router;
 
-Routers::add(
+Router::add(
+    'users',
+    [
+        'controller' => \app\controllers\UsersController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ]
+);
+
+Router::add(
+    'users/{id:\d+}',
+    [
+        'controller' => \app\controllers\UsersController::class,
+        'action' => 'show',
+        'method' => 'GET'
+    ]
+);
+
+Router::add(
     'users/{id:\d+}/edit',
     [
         'controller' => \app\controllers\UsersController::class,
         'action' => 'edit',
-        'method' => 'get'
+        'method' => 'GET'
+    ]
+);
+
+Router::add(
+    'users/{id:\d+}/update',
+    [
+        'controller' => \app\controllers\UsersController::class,
+        'action' => 'update',
+        'method' => 'POST'
     ]
 );
 
