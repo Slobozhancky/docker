@@ -3,6 +3,12 @@
 require_once dirname(__DIR__) . "/config/config.php";
 
 try {
+    $dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT);
+
+    $dotenv->load();
+
+    \core\Config::get('db.user');
+
     if (!preg_match('/assets/i', $_SERVER['REQUEST_URI'])){
         core\Router::dispatch($_SERVER['REQUEST_URI']);
     }
