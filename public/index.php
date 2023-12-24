@@ -5,6 +5,12 @@ require_once dirname(__DIR__) . "/config/config.php";
 try {
     $dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT);
 
+    $users = \app\models\User::select()->get();
+
+    foreach ($users as $user){
+        dd($user->getUserInfo());
+    }
+
     $dotenv->load();
 
     \core\Config::get('db.user');

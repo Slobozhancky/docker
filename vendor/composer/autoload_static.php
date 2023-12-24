@@ -14,6 +14,7 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '0e423a14e27410a071e5d815d3ffc856' => __DIR__ . '/..' . '/larapack/dd/src/helper.php',
         '4dc76ce70df172426584d4d7ef9194b2' => __DIR__ . '/../..' . '/routes/web.php',
+        '38521f91955b3eb761c9cbcb03eb206e' => __DIR__ . '/../..' . '/core/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -215,6 +216,7 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'app\\controllers\\UsersController' => __DIR__ . '/../..' . '/app/controllers/UsersController.php',
+        'core\\Config' => __DIR__ . '/../..' . '/core/Config.php',
         'core\\Controller' => __DIR__ . '/../..' . '/core/Controller.php',
         'core\\Db' => __DIR__ . '/../..' . '/core/Db.php',
         'core\\Router' => __DIR__ . '/../..' . '/core/Router.php',

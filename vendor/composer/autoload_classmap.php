@@ -130,6 +130,7 @@ return array(
     'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
     'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     'app\\controllers\\UsersController' => $baseDir . '/app/controllers/UsersController.php',
+    'core\\Config' => $baseDir . '/core/Config.php',
     'core\\Controller' => $baseDir . '/core/Controller.php',
     'core\\Db' => $baseDir . '/core/Db.php',
     'core\\Router' => $baseDir . '/core/Router.php',
