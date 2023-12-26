@@ -13,7 +13,7 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '0e423a14e27410a071e5d815d3ffc856' => __DIR__ . '/..' . '/larapack/dd/src/helper.php',
-        '4dc76ce70df172426584d4d7ef9194b2' => __DIR__ . '/../..' . '/routes/web.php',
+        '1352b45948aa23d30e92b4f27af6e4ac' => __DIR__ . '/../..' . '/routes/api.php',
         '38521f91955b3eb761c9cbcb03eb206e' => __DIR__ . '/../..' . '/core/helpers.php',
     );
 
@@ -216,10 +216,16 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'app\\controllers\\UsersController' => __DIR__ . '/../..' . '/app/controllers/UsersController.php',
+        'app\\models\\Folder' => __DIR__ . '/../..' . '/app/models/Folder.php',
+        'app\\models\\Note' => __DIR__ . '/../..' . '/app/models/Note.php',
+        'app\\models\\SharedNote' => __DIR__ . '/../..' . '/app/models/SharedNote.php',
+        'app\\models\\User' => __DIR__ . '/../..' . '/app/models/User.php',
         'core\\Config' => __DIR__ . '/../..' . '/core/Config.php',
         'core\\Controller' => __DIR__ . '/../..' . '/core/Controller.php',
         'core\\Db' => __DIR__ . '/../..' . '/core/Db.php',
+        'core\\Model' => __DIR__ . '/../..' . '/core/Model.php',
         'core\\Router' => __DIR__ . '/../..' . '/core/Router.php',
+        'core\\Traits\\Queryable' => __DIR__ . '/../..' . '/core/Traits/Queryable.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

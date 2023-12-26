@@ -2,22 +2,14 @@
 
 require_once dirname(__DIR__) . "/config/config.php";
 
+use app\models\User;
+
 try {
     $dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT);
-
-    $users = \app\models\User::select()->get();
-
-    foreach ($users as $user){
-        dd($user->getUserInfo());
-    }
-
     $dotenv->load();
 
-    \core\Config::get('db.user');
+    dd(core\Router::dispatch($_SERVER['REQUEST_URI']));
 
-    if (!preg_match('/assets/i', $_SERVER['REQUEST_URI'])){
-        core\Router::dispatch($_SERVER['REQUEST_URI']);
-    }
 } catch (PDOException $exception) {
     dd("PDOException", $exception);
 } catch (Exception $exception) {

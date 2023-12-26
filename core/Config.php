@@ -4,7 +4,7 @@ namespace core;
 
 class Config
 {
-    static array $configs = [];
+    protected array $configs = [];
 
     static protected Config|null $instance = null;
 
@@ -32,7 +32,7 @@ class Config
         return $this->configs;
     }
 
-    protected function findParamByKeys(array $keys = [], array $configs = []): string|null
+    protected function findParamsByKeys(array $keys = [], array $configs = []): string|null
     {
         $value = null;
 
@@ -44,7 +44,7 @@ class Config
 
         if (array_key_exists($needle, $configs)) {
             $value = is_array($configs[$needle])
-                ? $this->findParamByKeys($keys, $configs[$needle])
+                ? $this->findParamsByKeys($keys, $configs[$needle])
                 : $configs[$needle];
         }
 

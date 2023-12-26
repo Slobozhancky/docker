@@ -2,9 +2,9 @@
 
 return  [
     'db' => [
-       'host' => getenv('DB_HOST') ?? null,
-       'database' => getenv('DB_NAME') ?? null,
-       'user' => getenv('DB_USER') ?? null,
-       'password' => getenv('DB_PASSWORD') ?? null,
+       'host' => $_ENV['DB_HOST'] ?? null,
+       'database' => $_ENV['DB_NAME'] ?? null,
+       'user' => $_ENV['DB_USER'] ?? null,
+       'password' => $_ENV['DB_PASSWORD'] ?? null,
     ]
 ];

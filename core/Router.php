@@ -16,26 +16,35 @@ class Router
         $route = preg_replace('/\//', '\\/', $route);
         $route = preg_replace('/\{([a-z_]+):([^}]+)}/', '(?P<$1>$2)', $route);
         $route = "/^$route$/i";
+
         static::$routes[$route] = $params;
     }
 
-    static public function dispatch(string $uri): void
+    static public function dispatch(string $uri): string
     {
+        $data = [];
         $uri = static::removeQueryVariables($uri);
         $uri = trim($uri, '/');
-        d($uri);
 
         if (static::match($uri)) {
+            // check HTTP method
             static::checkRequestMethod();
 
+            // get controller
             $controller = static::getController();
             $action = static::getAction($controller);
 
             if ($controller->before($action, static::$params)) {
-                call_user_func_array([$controller, $action], static::$params);
+                $data = call_user_func_array([$controller, $action], static::$params);
                 $controller->after($action);
             }
         }
+
+        return json_encode([
+            "data" => $data,
+            "status" => "OK",
+            "code" => 200
+        ]);
     }
 
     static protected function getAction(Controller $controller): string
@@ -64,19 +73,7 @@ class Router
         return new $controller;
     }
 
-    static protected function match(string $uri): bool
-    {
-        foreach (static::$routes as $route => $param) {
-            if (preg_match($route, $uri, $matches)) {
-                static::$params = static::buildParams($route, $matches, $param);
-                return true;
-            }
-        }
-
-        throw new \Exception("Route uri {$uri} not found", 404);
-    }
-
-    static protected function checkRequestMethod(): void
+    static protected function checkRequestMethod()
     {
         if (array_key_exists('method', static::$params)) {
             $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
@@ -87,6 +84,18 @@ class Router
 
             unset(static::$params['method']);
         }
+    }
+
+    static protected function match(string $uri): bool
+    {
+        foreach (static::$routes as $route => $params) {
+            if (preg_match($route, $uri, $matches)) {
+                static::$params = static::buildParams($route, $matches, $params);
+                return true;
+            }
+        }
+
+        throw new \Exception("Route [$uri] not found", 404);
     }
 
     static protected function buildParams(string $route, array $matches, array $params): array
@@ -113,6 +122,4 @@ class Router
     {
         return preg_replace('/([\w\/\-]+)\?([\w\/=\d%*&\?]+)/i', '$1', $uri);
     }
-
-
 }
