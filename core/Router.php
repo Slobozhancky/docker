@@ -40,11 +40,7 @@ class Router
             }
         }
 
-        return json_encode([
-            "data" => $data,
-            "status" => "OK",
-            "code" => 200
-        ]);
+        return json_response(200, $data);
     }
 
     static protected function getAction(Controller $controller): string

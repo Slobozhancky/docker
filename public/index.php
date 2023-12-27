@@ -8,7 +8,7 @@ try {
     $dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT);
     $dotenv->load();
 
-    dd(core\Router::dispatch($_SERVER['REQUEST_URI']));
+    die(core\Router::dispatch($_SERVER['REQUEST_URI']));
 
 } catch (PDOException $exception) {
     dd("PDOException", $exception);
