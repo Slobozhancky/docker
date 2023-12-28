@@ -3,17 +3,17 @@
 
 use core\Config;
 
-//function requestBody(): array
-//{
-//    $data = [];
-//    $requestBody = file_get_contents("php://input");
-//
-//    if (!empty($requestBody)) {
-//        $data = json_decode($requestBody, true);
-//    }
-//
-//    return $data;
-//}
+function requestBody(): array
+{
+    $data = [];
+    $requestBody = file_get_contents("php://input");
+
+    if (!empty($requestBody)) {
+        $data = json_decode($requestBody, true);
+    }
+
+    return $data;
+}
 
 function json_response($code = 200, array $data = []): string
 {
@@ -34,7 +34,7 @@ function json_response($code = 200, array $data = []): string
     return json_encode(array(
         'code' => $code,
         'status' => $status[$code],
-        'data' => $data
+        ...$data
     ));
 }
 
