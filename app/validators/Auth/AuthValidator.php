@@ -20,7 +20,7 @@ class AuthValidator extends Base
 
         $result = [
             parent::validate($fields),
-            !$this->checkEmailOnExists($fields['email'], false, self::DEFAULT_MESSAGE)
+            $this->checkEmailOnExists($fields['email'], false, self::DEFAULT_MESSAGE)
         ];
 
         return !in_array(false, $result);

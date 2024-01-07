@@ -34,6 +34,10 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
         ),
+        'R' => 
+        array (
+            'ReallySimpleJWT\\' => 16,
+        ),
         'P' => 
         array (
             'PhpOption\\' => 10,
@@ -76,6 +80,10 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'Symfony\\Component\\VarDumper\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
+        ),
+        'ReallySimpleJWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src',
         ),
         'PhpOption\\' => 
         array (
@@ -143,6 +151,28 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'PhpOption\\Option' => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption/Option.php',
         'PhpOption\\Some' => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption/Some.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'ReallySimpleJWT\\Build' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Build.php',
+        'ReallySimpleJWT\\Decode' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Decode.php',
+        'ReallySimpleJWT\\Encoders\\EncodeHS256' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Encoders/EncodeHS256.php',
+        'ReallySimpleJWT\\Encoders\\EncodeHS256Strong' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Encoders/EncodeHS256Strong.php',
+        'ReallySimpleJWT\\Exception\\BuildException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/BuildException.php',
+        'ReallySimpleJWT\\Exception\\EncodeException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/EncodeException.php',
+        'ReallySimpleJWT\\Exception\\JwtException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/JwtException.php',
+        'ReallySimpleJWT\\Exception\\ParsedException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/ParsedException.php',
+        'ReallySimpleJWT\\Exception\\TokensException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/TokensException.php',
+        'ReallySimpleJWT\\Exception\\ValidateException' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Exception/ValidateException.php',
+        'ReallySimpleJWT\\Helper\\Base64' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Helper/Base64.php',
+        'ReallySimpleJWT\\Helper\\JsonEncoder' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Helper/JsonEncoder.php',
+        'ReallySimpleJWT\\Helper\\Validator' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Helper/Validator.php',
+        'ReallySimpleJWT\\Interfaces\\Decode' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Interfaces/Decode.php',
+        'ReallySimpleJWT\\Interfaces\\Encode' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Interfaces/Encode.php',
+        'ReallySimpleJWT\\Interfaces\\Validator' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Interfaces/Validator.php',
+        'ReallySimpleJWT\\Jwt' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Jwt.php',
+        'ReallySimpleJWT\\Parse' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Parse.php',
+        'ReallySimpleJWT\\Parsed' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Parsed.php',
+        'ReallySimpleJWT\\Token' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Token.php',
+        'ReallySimpleJWT\\Tokens' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Tokens.php',
+        'ReallySimpleJWT\\Validate' => __DIR__ . '/..' . '/rbdwllr/reallysimplejwt/src/Validate.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'Symfony\\Component\\VarDumper\\Caster\\AmqpCaster' => __DIR__ . '/..' . '/symfony/var-dumper/Caster/AmqpCaster.php',
         'Symfony\\Component\\VarDumper\\Caster\\ArgsStub' => __DIR__ . '/..' . '/symfony/var-dumper/Caster/ArgsStub.php',
@@ -215,11 +245,18 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
-        'app\\controllers\\UsersController' => __DIR__ . '/../..' . '/app/controllers/UsersController.php',
+        'app\\controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/controllers/Api/AuthController.php',
+        'app\\controllers\\Api\\BaseApiController' => __DIR__ . '/../..' . '/app/controllers/Api/BaseApiController.php',
+        'app\\controllers\\Api\\FoldersController' => __DIR__ . '/../..' . '/app/controllers/Api/FoldersController.php',
         'app\\models\\Folder' => __DIR__ . '/../..' . '/app/models/Folder.php',
         'app\\models\\Note' => __DIR__ . '/../..' . '/app/models/Note.php',
         'app\\models\\SharedNote' => __DIR__ . '/../..' . '/app/models/SharedNote.php',
         'app\\models\\User' => __DIR__ . '/../..' . '/app/models/User.php',
+        'app\\validators\\Auth\\AuthValidator' => __DIR__ . '/../..' . '/app/validators/Auth/AuthValidator.php',
+        'app\\validators\\Auth\\Base' => __DIR__ . '/../..' . '/app/validators/Auth/Base.php',
+        'app\\validators\\Auth\\RegisterValidator' => __DIR__ . '/../..' . '/app/validators/Auth/RegisterValidator.php',
+        'app\\validators\\BaseValidator' => __DIR__ . '/../..' . '/app/validators/BaseValidator.php',
+        'app\\validators\\Folders\\CreateFoldersValidator' => __DIR__ . '/../..' . '/app/validators/Folders/CreateFoldersValidator.php',
         'core\\Config' => __DIR__ . '/../..' . '/core/Config.php',
         'core\\Controller' => __DIR__ . '/../..' . '/core/Controller.php',
         'core\\Db' => __DIR__ . '/../..' . '/core/Db.php',

@@ -8,7 +8,7 @@ trait Queryable
 {
     static protected string|null $tableName = null;
     static protected string $query = '';
-    protected array $commands = [];
+    private array $commands = [];
 
     static public function select(array $columns = ['*']): static
     {
@@ -44,16 +44,18 @@ trait Queryable
         return $query->fetchObject(static::class);
     }
 
-    static public function create(array $fields): false|int
+    static public function create(array $fields): null|static
     {
         $params = static::prepareQueryParams($fields);
         $query = db()->prepare("INSERT INTO " . static::$tableName . "($params[keys]) VALUES ($params[placeholders])");
 
         if (!$query->execute($fields)) {
-            return false;
+            return null;
         }
 
-        return (int)db()->lastInsertId();
+        $query->closeCursor();
+
+        return static::find(db()->lastInsertId());
     }
 
     static public function delete(int $id): bool
@@ -74,13 +76,55 @@ trait Queryable
         ];
     }
 
+    static public function __callStatic(string $name, array $arguments)
+    {
+        if (in_array($name, ['where'])) {
+            d($name);
+            $obj = static::select();
+            d($obj);
+            call_user_func_array([$obj, $name], $arguments);
+        }
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        if (in_array($name, ['where'])) {
+            d($name);
+            call_user_func_array([$this, $name], $arguments);
+        }
+    }
+
     static protected function resetQuery(): void
     {
         static::$query = '';
     }
 
+    protected function where(string $column, string $operator, $value = null): static
+    {
+        if ($this->prevent(['group', 'limit', 'order', 'having'])) {
+            throw new \Exception(
+                static::class .
+                "WHERE не може бути після ['group', 'limit', 'order', 'having']"
+            );
+        }
+
+        dd(__METHOD__, $column, $operator, $value);
+
+    }
+
     public function get(): array
     {
         return db()->query(static::$query)->fetchALl(PDO::FETCH_CLASS, static::class);
+    }
+
+    protected function prevent(array $allowedMethods): bool
+    {
+        foreach ($allowedMethods as $method) {
+            if (in_array($method, $this->commands)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
