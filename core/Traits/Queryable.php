@@ -76,21 +76,18 @@ trait Queryable
         ];
     }
 
-    static public function __callStatic(string $name, array $arguments)
+    static public function __callStatic(string $name, array $arguments): mixed
     {
         if (in_array($name, ['where'])) {
-            d($name);
             $obj = static::select();
-            d($obj);
-            call_user_func_array([$obj, $name], $arguments);
+            return call_user_func_array([$obj, $name], $arguments);
         }
     }
 
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         if (in_array($name, ['where'])) {
-            d($name);
-            call_user_func_array([$this, $name], $arguments);
+            return call_user_func_array([$this, $name], $arguments);
         }
     }
 
@@ -108,8 +105,42 @@ trait Queryable
             );
         }
 
-        dd(__METHOD__, $column, $operator, $value);
+        $obj = in_array('select', $this->commands) ? $this : static::select();
 
+        if (
+            !is_null($value) &&
+            !is_bool($value) &&
+            !is_array($value) &&
+            !is_numeric($value) &&
+            !in_array($operator, ['IN', 'NOT IN'])
+        ) {
+            $value = "'$value'";
+        }
+
+        if (is_null($value)) {
+            $value = "NULL";
+        }
+
+        if (is_array($value)) {
+            $value = array_map(fn($item) => is_string($item) ? "'$item'" : $item, $value);
+            $value = '(' . implode(', ', $value) . ')';
+        }
+
+        if (!in_array('where', $obj->commands)) {
+            static::$query .= " WHERE";
+        }
+
+        static::$query .= " $column $operator $value";
+
+        $this->commands[] = 'where';
+
+        return $obj;
+
+    }
+
+    public function sql(): string
+    {
+        return static::$query;
     }
 
     public function get(): array
