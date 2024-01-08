@@ -2,6 +2,7 @@
 
 namespace core\Traits;
 
+use enums\SQL;
 use PDO;
 
 trait Queryable
@@ -112,7 +113,8 @@ trait Queryable
             !is_bool($value) &&
             !is_array($value) &&
             !is_numeric($value) &&
-            !in_array($operator, ['IN', 'NOT IN'])
+            !in_array($operator, [SQL::IN_OPERATOR->value, SQL::NOT_IN_OPERATOR->value]) &&
+            $value != SQL::NULL->value
         ) {
             $value = "'$value'";
         }
@@ -122,12 +124,12 @@ trait Queryable
         }
 
         if (is_array($value)) {
-            $value = array_map(fn($item) => is_string($item) ? "'$item'" : $item, $value);
+            $value = array_map(fn($item) => is_string($item) && $item != SQL::NULL->value ? "'$item'" : $item, $value);
             $value = '(' . implode(', ', $value) . ')';
         }
 
         if (!in_array('where', $obj->commands)) {
-            static::$query .= " WHERE";
+            static::$query .= "WHERE";
         }
 
         static::$query .= " $column $operator $value";
@@ -138,9 +140,55 @@ trait Queryable
 
     }
 
+    public function andWhere(string $column, string $operator, $value = null): static
+    {
+        static::$query .= " AND";
+        return $this->where($column, $operator, $value);
+    }
+
+    public function orWhere(string $column, string $operator, $value = null): static
+    {
+        static::$query .= " OR";
+        return $this->where($column, $operator, $value);
+    }
+
     public function sql(): string
     {
         return static::$query;
+    }
+
+    public function orderBy(array $columns): static
+    {
+        if (!$this->prevent(['select'])) {
+            throw new \Exception(
+                static::class .
+                ": [ORDER BY] не може бути перед [SELECT]"
+            );
+        }
+
+        $this->commands[] = 'order';
+
+        $lastKey = array_key_last($columns);
+
+        static::$query .= " ORDER BY ";
+
+        foreach ($columns as $column => $order) {
+            static::$query .= "$column $order->value" . ($column === $lastKey ? "" : ",");
+        }
+
+        return $this;
+    }
+
+    public function exist()
+    {
+        if (!$this->prevent(['select'])) {
+            throw new \Exception(
+                static::class .
+                "exist не може бути викликана перед ['select']"
+            );
+        }
+
+        return !empty($this->get());
     }
 
     public function get(): array

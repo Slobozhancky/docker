@@ -4,12 +4,23 @@ namespace app\controllers\Api;
 
 use app\models\Folder;
 use app\validators\Folders\CreateFoldersValidator;
+use enums\SQL;
+use enums\sqlOrder;
 
 class FoldersController extends BaseApiController
 {
     public function index()
     {
-        dd(__METHOD__);
+        return $this->response(
+            200,
+            Folder::where('user_id', '=', authId())
+                ->orWhere('user_id', "IS", SQL::NULL->value)
+                ->orderBy([
+                    'user_id' => sqlOrder::ASC,
+                    'title' => sqlOrder::ASC,
+                ])
+                ->get()
+        );
     }
 
     public function show(int $id)
@@ -23,9 +34,8 @@ class FoldersController extends BaseApiController
         $validator = new CreateFoldersValidator();
         $validator->validate($data);
 
-        if ($validator->validate($data)){
-            $folder = Folder::create($data);
-            dd($folder);
+        if ($validator->validate($data) && $folder = Folder::create($data)) {
+            return $this->response(200, $folder->toArray());
         }
 
         return $this->response(200, [], $validator->getErrors());

@@ -169,4 +169,5 @@ return array(
     'core\\Model' => $baseDir . '/core/Model.php',
     'core\\Router' => $baseDir . '/core/Router.php',
     'core\\Traits\\Queryable' => $baseDir . '/core/Traits/Queryable.php',
+    'enums\\SQL' => $baseDir . '/enums/SQL.php',
 );

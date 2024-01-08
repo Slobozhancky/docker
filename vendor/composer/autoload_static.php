@@ -18,6 +18,10 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
     );
 
     public static $prefixLengthsPsr4 = array (
+        'e' => 
+        array (
+            'enums\\' => 6,
+        ),
         'c' => 
         array (
             'core\\' => 5,
@@ -53,6 +57,10 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
     );
 
     public static $prefixDirsPsr4 = array (
+        'enums\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/enums',
+        ),
         'core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
@@ -263,6 +271,7 @@ class ComposerStaticInit197ebd0d508553fcabbe2a4125bf651e
         'core\\Model' => __DIR__ . '/../..' . '/core/Model.php',
         'core\\Router' => __DIR__ . '/../..' . '/core/Router.php',
         'core\\Traits\\Queryable' => __DIR__ . '/../..' . '/core/Traits/Queryable.php',
+        'enums\\SQL' => __DIR__ . '/../..' . '/enums/SQL.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

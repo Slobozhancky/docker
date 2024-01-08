@@ -4,7 +4,8 @@
     "psr-4": {
       "app\\": "app/",
       "core\\": "core/",
-      "config\\": "config/"
+      "config\\": "config/",
+      "enums\\": "enums/"
     },
     "files": [
       "routes/api.php",

@@ -9,8 +9,8 @@ try {
     $dotenv = \Dotenv\Dotenv::createUnsafeImmutable(ROOT);
     $dotenv->load();
 
-    dd(Folder::select()->where('title', '=', 20)->sql());
-//    die(core\Router::dispatch($_SERVER['REQUEST_URI']));
+//    dd(Folder::select()->where('title', '=', 20)->sql());
+    die(core\Router::dispatch($_SERVER['REQUEST_URI']));
 
 } catch (PDOException $exception) {
     error_response($exception);
