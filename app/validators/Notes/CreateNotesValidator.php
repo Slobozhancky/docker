@@ -1,11 +1,11 @@
 <?php
 
-namespace app\validators\Folders;
+namespace app\validators\Notes;
 
 use app\models\Folder;
 use app\validators\BaseValidator;
 
-class CreateFoldersValidator extends BaseValidator
+class CreateNotesValidator extends BaseValidator
 {
     protected array $rules = [
         'title' => '/[\w\d\s\(\)\-]{3,}/i'

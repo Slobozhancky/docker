@@ -42,3 +42,35 @@
     'method' => 'DELETE'
 ]);
 
+// ================ Notes routes ===============
+
+\core\Router::add('api/notes', [
+    'controller' => \app\controllers\Api\NotesController::class,
+    'action' => 'index',
+    'method' => 'GET'
+]);
+
+\core\Router::add('api/notes/{id:\d+}', [
+    'controller' => \app\controllers\Api\NotesController::class,
+    'action' => 'show',
+    'method' => 'GET'
+]);
+
+\core\Router::add('api/notes/store', [
+    'controller' => \app\controllers\Api\NotesController::class,
+    'action' => 'store',
+    'method' => 'POST'
+]);
+
+\core\Router::add('api/notes/{id:\d+}/update', [
+    'controller' => \app\controllers\Api\NotesController::class,
+    'action' => 'update',
+    'method' => 'PUT'
+]);
+
+\core\Router::add('api/notes/{id:\d+}/delete', [
+    'controller' => \app\controllers\Api\NotesController::class,
+    'action' => 'delete',
+    'method' => 'DELETE'
+]);
+

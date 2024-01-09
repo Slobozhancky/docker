@@ -37,7 +37,8 @@ function json_response($code = 200, array $data = []): string
         200 => '200 OK',
         400 => '400 Bad Request',
         422 => 'Unprocessable Entity',
-        500 => '500 Internal Server Error'
+        500 => '500 Internal Server Error',
+        403 => 'Forbidden',
     );
 
     header('Status: ' . $status[$code]);

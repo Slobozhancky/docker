@@ -59,6 +59,28 @@ trait Queryable
         return static::find(db()->lastInsertId());
     }
 
+    public function update(array $fields): static{
+        $query = "UPDATE " . static::$tableName . " SET " . $this->updatePlaceholder(array_keys($fields)) . " WHERE id = :id";
+        $query = db()->prepare($query);
+
+        $fields['id'] = $this->id;
+
+        $query->execute($fields);
+
+        return static::find($this->id);
+    }
+
+    protected function updatePlaceholder(array $keys): string{
+        $string = '';
+        $lastKey = array_key_last($keys);
+
+        foreach ($keys as $index => $key){
+            $string .= "$key=:$key" . ($lastKey === $index ? "" : ", ");
+        }
+
+        return $string;
+    }
+
     static public function delete(int $id): bool
     {
         $query = db()->prepare("DELETE FROM " . static::$tableName . " WHERE id = :id");

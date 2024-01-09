@@ -17,13 +17,13 @@ class AuthController extends Controller
 
         if ($validator->validate($data)) {
 
-            $id = User::create([
+            $user = User::create([
                 ...$data,
                 'password' => password_hash($data['password'], PASSWORD_BCRYPT)
             ]);
 
 
-            return $this->response(200, User::find($id)->toArray());
+            return $this->response(200, $user->toArray());
         }
 
         return $this->response(200, $data, $validator->getErrors());

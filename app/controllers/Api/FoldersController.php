@@ -25,14 +25,22 @@ class FoldersController extends BaseApiController
 
     public function show(int $id)
     {
-        dd(__METHOD__, $id);
+        $folder = Folder::find($id);
+
+        if ($folder && !is_null($folder->user_id) && $folder->user_id !== authId()) {
+            return $this->response(403, [], [
+                'message' => 'Цей ресурс заборонений для тебе'
+            ]);
+        }
+
+        return $this->response(200, $folder->toArray());
     }
 
     public function store()
     {
         $data = array_merge(requestBody(), ['user_id' => authId()]);
         $validator = new CreateFoldersValidator();
-        $validator->validate($data);
+//        $validator->validate($data);
 
         if ($validator->validate($data) && $folder = Folder::create($data)) {
             return $this->response(200, $folder->toArray());
@@ -43,12 +51,45 @@ class FoldersController extends BaseApiController
 
     public function update(int $id)
     {
-        dd(__METHOD__, $id);
+        $folder = Folder::find($id);
+
+        if ($folder && is_null($folder->user_id) && $folder->user_id !== authId()) {
+            return $this->response(403, errors: [
+                'message' => 'Цей ресурс заборонений для тебе'
+            ]);
+        }
+
+        $data = [
+            ...requestBody(),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        $validator = new CreateFoldersValidator();
+        if ($validator->validate($data) && $folder = $folder->update($data)) {
+            return $this->response(body: $folder->toArray());
+        }
+
+        return $this->response(errors: $validator->getErrors());
+
     }
 
     public function delete(int $id)
     {
-        dd(__METHOD__, $id);
+        $folder = Folder::find($id);
+
+        if ($folder && is_null($folder->user_id) && $folder->user_id !== authId()) {
+            return $this->response(403, [], [
+                'message' => 'Цей ресурс заборонений для тебе'
+            ]);
+        }
+
+        $result = Folder::delete($id);
+
+        if (!$result) {
+            return $this->response(422, [], ["message" => "Вибачте, виникла помилка"]);
+        }
+
+        return $this->response();
     }
 }
 
