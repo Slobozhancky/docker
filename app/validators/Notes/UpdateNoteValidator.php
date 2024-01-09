@@ -6,24 +6,26 @@ use app\models\Folder;
 use app\validators\BaseValidator;
 use enums\SQL;
 
-class CreateNotesValidator extends BaseValidator
+class UpdateNoteValidator extends BaseValidator
 {
     protected array $rules = [
         'title' => '/[\w\d\s\(\)\-]{3,}/i',
         'content' => '/.*$/i',
-        'folder_id' => '/\d+/i'
     ];
 
     protected array $errors = [
         'title' => 'Title should contain characters, numbers and _-() symbols and has length more than 2 symbols',
-        'folder_id' => 'folder id should be exists in request and has type int'
     ];
 
-    protected array $skip = ['user_id', 'updated_at'];
+    protected array $skip = ['user_id', 'updated_at', 'pinned', 'completed'];
 
-    public function validateFolderId(int $id): bool
+    public function validateFolderId(array $fields): bool
     {
-        return Folder::where('id', '=', $id)
+        if (empty($fields['folder_id'])) {
+            return true;
+        }
+
+        return Folder::where('id', '=', $fields['folder_id'])
             ->startCondition()
             ->andWhere('user_id', '=', authId())
             ->orWhere('user_id', SQL::IS_OPERATOR->value, SQL::NULL->value)
@@ -31,11 +33,22 @@ class CreateNotesValidator extends BaseValidator
             ->exists();
     }
 
+    public function validateBooleanValue(array $fields, string $key): bool
+    {
+        if (empty($fields[$key])) {
+            return true;
+        }
+
+        return is_bool($fields[$key]);
+    }
+
     public function validate(array $fields = []): bool
     {
         $result = [
             parent::validate($fields),
-            $this->validateFolderId($fields['folder_id'])
+            $this->validateFolderId($fields),
+            $this->validateBooleanValue($fields, 'pinned'),
+            $this->validateBooleanValue($fields, 'completed'),
         ];
 
         return !in_array(false, $result);

@@ -2,9 +2,9 @@
 
 namespace app\controllers\Api;
 
-use app\models\Folder;
-use app\validators\Folders\CreateFoldersValidator;
-use enums\SQL;
+use app\models\Note;
+use app\validators\Notes\CreateNotesValidator;
+use app\validators\Notes\UpdateNoteValidator;
 use enums\sqlOrder;
 
 class NotesController extends BaseApiController
@@ -12,12 +12,9 @@ class NotesController extends BaseApiController
     public function index()
     {
         return $this->response(
-            200,
-            Folder::where('user_id', '=', authId())
-                ->orWhere('user_id', "IS", SQL::NULL->value)
+            body: Note::where('user_id', '=', authId())
                 ->orderBy([
-                    'user_id' => sqlOrder::ASC,
-                    'title' => sqlOrder::ASC,
+                    'updated_at' => SqlOrder::DESC
                 ])
                 ->get()
         );
@@ -25,71 +22,74 @@ class NotesController extends BaseApiController
 
     public function show(int $id)
     {
-        $folder = Folder::find($id);
+        $note = Note::find($id);
 
-        if ($folder && !is_null($folder->user_id) && $folder->user_id !== authId()) {
+        if ($note && $note->user_id !== authId()) {
             return $this->response(403, [], [
-                'message' => 'Цей ресурс заборонений для тебе'
+                'message' => 'This resource is forbidden for you'
             ]);
         }
 
-        return $this->response(200, $folder->toArray());
+        return $this->response(body: $note->toArray());
     }
 
-    public function store()
+    public function store(): array
     {
-        $data = array_merge(requestBody(), ['user_id' => authId()]);
-        $validator = new CreateFoldersValidator();
-//        $validator->validate($data);
+        $data = array_merge(
+            requestBody(),
+            ['user_id' => authId()]
+        );
 
-        if ($validator->validate($data) && $folder = Folder::create($data)) {
-            return $this->response(200, $folder->toArray());
+        $validator = new CreateNotesValidator();
+
+        if ($validator->validate($data) && $note = Note::create($data)) {
+            return $this->response(body: $note->toArray());
         }
 
-        return $this->response(200, [], $validator->getErrors());
+        return $this->response(errors: $validator->getErrors());
     }
 
-//    public function update(int $id)
-//    {
-//        $folder = Folder::find($id);
-//
-//        if ($folder && is_null($folder->user_id) && $folder->user_id !== authId()) {
-//            return $this->response(403, errors: [
-//                'message' => 'Цей ресурс заборонений для тебе'
-//            ]);
-//        }
-//
-//        $data = [
-//            ...requestBody(),
-//            'updated_at' => date('Y-m-d H:i:s')
-//        ];
-//
-//        $validator = new CreateFoldersValidator();
+    public function update(int $id)
+    {
+        $note = Note::find($id);
+
+        if ($note && $note->user_id !== authId()) {
+            return $this->response(403, errors: [
+                'message' => 'This resource is forbidden for you'
+            ]);
+        }
+
+        $data = [
+            ...requestBody(),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        $validator = new UpdateNoteValidator();
+        dd($validator->validate($data));
 //        if ($validator->validate($data) && $folder = $folder->update($data)) {
 //            return $this->response(body: $folder->toArray());
 //        }
-//
-//        return $this->response(errors: $validator->getErrors());
-//
-//    }
-//
-//    public function delete(int $id)
-//    {
-//        $folder = Folder::find($id);
-//
-//        if ($folder && is_null($folder->user_id) && $folder->user_id !== authId()) {
-//            return $this->response(403, [], [
-//                'message' => 'Цей ресурс заборонений для тебе'
-//            ]);
-//        }
-//
-//        $result = Folder::delete($id);
-//
-//        if (!$result) {
-//            return $this->response(422, [], ["message" => "Вибачте, виникла помилка"]);
-//        }
-//
-//        return $this->response();
-//    }
+
+        return $this->response(errors: $validator->getErrors());
+    }
+
+    public function delete(int $id)
+    {
+        $note = Note::find($id);
+
+        if ($note && $note->user_id !== authId()) {
+            return $this->response(403, [], [
+                'message' => 'This resource is forbidden for you'
+            ]);
+        }
+
+        $result = Note::destroy($id);
+
+        if (!$result) {
+            return $this->response(422, [], ['message' => 'Oops smth went wrong']);
+        }
+
+        return $this->response();
+    }
 }
 

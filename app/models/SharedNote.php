@@ -6,6 +6,6 @@ use core\Model;
 
 class SharedNote extends Model
 {
-    protected static string|null $table = 'shared_notes';
+    protected static string|null $tableName = 'shared_notes';
 
 }

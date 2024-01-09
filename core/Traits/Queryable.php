@@ -48,6 +48,7 @@ trait Queryable
     static public function create(array $fields): null|static
     {
         $params = static::prepareQueryParams($fields);
+
         $query = db()->prepare("INSERT INTO " . static::$tableName . "($params[keys]) VALUES ($params[placeholders])");
 
         if (!$query->execute($fields)) {
@@ -59,7 +60,8 @@ trait Queryable
         return static::find(db()->lastInsertId());
     }
 
-    public function update(array $fields): static{
+    public function update(array $fields): static
+    {
         $query = "UPDATE " . static::$tableName . " SET " . $this->updatePlaceholder(array_keys($fields)) . " WHERE id = :id";
         $query = db()->prepare($query);
 
@@ -70,11 +72,12 @@ trait Queryable
         return static::find($this->id);
     }
 
-    protected function updatePlaceholder(array $keys): string{
+    protected function updatePlaceholder(array $keys): string
+    {
         $string = '';
         $lastKey = array_key_last($keys);
 
-        foreach ($keys as $index => $key){
+        foreach ($keys as $index => $key) {
             $string .= "$key=:$key" . ($lastKey === $index ? "" : ", ");
         }
 
@@ -162,9 +165,24 @@ trait Queryable
 
     }
 
+    public function startCondition(): static
+    {
+        $this->commands[] = 'startCondition';
+        return $this;
+    }
+
+
+    public function endCondition(): static
+    {
+        $this->commands[] = 'endCondition';
+        static::$query .= ') ';
+
+        return $this;
+    }
+
     public function andWhere(string $column, string $operator, $value = null): static
     {
-        static::$query .= " AND";
+        static::$query .= " AND" . ((in_array('startCondition', $this->commands) ? ' (' : ''));
         return $this->where($column, $operator, $value);
     }
 
@@ -201,7 +219,7 @@ trait Queryable
         return $this;
     }
 
-    public function exist()
+    public function exists(): bool
     {
         if (!$this->prevent(['select'])) {
             throw new \Exception(
