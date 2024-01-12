@@ -8,9 +8,12 @@ class BaseValidator
 
     public function validate(array $fields = []): bool
     {
-        foreach ($fields as $key => $fieldValue) {
+        if (empty($this->rules)) {
+            return true;
+        }
 
-            if (in_array($key, $this->skip)){
+        foreach($fields as $key => $fieldValue) {
+            if (in_array($key, $this->skip)) {
                 continue;
             }
 

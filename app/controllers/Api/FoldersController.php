@@ -3,7 +3,10 @@
 namespace app\controllers\Api;
 
 use app\models\Folder;
+use app\models\Note;
+use app\models\SharedNote;
 use app\validators\Folders\CreateFoldersValidator;
+use enums\Folders;
 use enums\SQL;
 use enums\sqlOrder;
 
@@ -36,7 +39,36 @@ class FoldersController extends BaseApiController
         return $this->response(200, $folder->toArray());
     }
 
-    public function store()
+    public function notes(int $id)
+    {
+        $folder = Folder::find($id);
+
+        $notes = match ($folder->title) {
+            Folders::GENERAL->value => Note::where('folder_id', '=', $id)->andWhere('user_id', '=', authId())->get(),
+            Folders::SHARED->value => Note::select(['notes.*'])
+                ->join(
+                    SharedNote::$tableName,
+                    [
+                        [
+                            'left' => 'notes.id',
+                            'operator' => '=',
+                            'right' => SharedNote::$tableName . '.note_id'
+                        ],
+                        [
+                            'left' => authId(),
+                            'operator' => '=',
+                            'right' => SharedNote::$tableName . '.user_id'
+                        ]
+                    ],
+                    'RIGHT'
+                )->get(),
+            default => Note::where('folder_id', '=', $id),
+        };
+
+        return $this->response(body: $notes);
+    }
+
+    public function store(): array
     {
         $data = array_merge(requestBody(), ['user_id' => authId()]);
         $validator = new CreateFoldersValidator();
@@ -73,7 +105,7 @@ class FoldersController extends BaseApiController
 
     }
 
-    public function delete(int $id)
+    public function delete(int $id): array
     {
         $folder = Folder::find($id);
 
@@ -92,4 +124,5 @@ class FoldersController extends BaseApiController
         return $this->response();
     }
 }
+
 

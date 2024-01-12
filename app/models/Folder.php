@@ -6,7 +6,7 @@ use core\Model;
 
 class Folder extends Model
 {
-    protected static string|null $tableName = 'folders';
+    public static string|null $tableName = 'folders';
 
     public string $title, $create_at, $updated_at;
     public int|null $user_id;

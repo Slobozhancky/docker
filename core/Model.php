@@ -72,8 +72,6 @@ abstract class Model
 {
     use Queryable;
 
-
-
     public int $id;
 
     public function toArray(): array
