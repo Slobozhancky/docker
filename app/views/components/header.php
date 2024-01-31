@@ -26,43 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="about">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
                     </ul>
 
                 </div>
             </div>
         </nav>
     </header>
-
-    <main class="main py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                   <?php echo $post['post']?>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-group">
-                        <li class="list-group-item active"
-                            aria-current="true"><?php echo $recent_posts[1]['slug'] ?></li>
-                        <?php foreach ($recent_posts as $key => $title): ?>
-                            <?php if ($key !== 1): ?>
-                                <li class="list-group-item"><?php echo $title['slug'] ?></li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        Footer <?php echo date("Y-m-d") ?>
-    </footer>
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
-    </body>
-    </html>

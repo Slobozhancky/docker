@@ -24,7 +24,7 @@ services:
     image: "mysql:8"
     restart: always
     ports:
-      - "36061:3606"
+      - "36062:3607"
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:

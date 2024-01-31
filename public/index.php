@@ -1,61 +1,30 @@
 <?php
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/config/constants.php';
+require_once ROOT . '/vendor/autoload.php';
+require_once CORE . '/funcs.php';
 
-$posts = [
-    1 => [
-        "title" => "title - 1",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 1"
-    ],
-    2 => [
-        "title" => "title - 2",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 2"
-    ],
-    3 => [
-        "title" => "title - 3",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 3"
-    ],
-    4 => [
-        "title" => "title - 4",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 4"
-    ],
-    5 => [
-        "title" => "title - 5",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 5"
-    ],
-    6 => [
-        "title" => "title - 6",
-        "desc" => "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        "slug" => "title 6"
-    ],
-];
+/**
+ * trim($_SERVER['REQUEST_URI'], '/'); - це й запис про те, що при вказуванні адреси, в строчці URL вона нам буде показувати інфо, на якій ми зараз знаходимось сторінці
+ * якщо ти не розумієш про що ссаме мова, то виведи за допомогою dd() та подивись що повернуться
+ * А функція trim() просто обріще слеші, щоб нам сручніше було робити перевірку того, яка саме у нас адреса була введена
+ */
+$uri = trim($_SERVER['REQUEST_URI'], '/');
 
-$recent_posts = [
-    1 => [
-        "slug" => "title - 1",
-    ],
-    2 => [
-        "slug" => "title - 2",
-    ],
-    3 => [
-        "slug" => "title - 3",
-    ],
-    4 => [
-        "slug" => "title - 4",
-    ],
-    5 => [
-        "slug" => "title - 5",
-    ],
-    6 => [
-        "slug" => "title - 6",
-    ],
-];
+if ($uri === '') {
+    require_once CONTROLLERS . '/index.php';
+} elseif ($uri == "about") {
+    require_once CONTROLLERS . '/about.php';
+} else {
+
+    /**
+     * http_response_code - має повернути бразеру помлку, у разі того, якщо сторінка не знайдена, а не тільки вивсти її вид
+     */
+    aboard();
+}
 
 
-require_once "index.tpl.php";
-    ?>
+
+
+
+

@@ -1,5 +1,7 @@
 <?php
 
+require_once ROOT . '/vendor/autoload.php';
+
 $post = [
     'post' => 'Some big post'
 ];
@@ -26,5 +28,4 @@ $recent_posts = [
 ];
 
 
-require_once "about.tpl.php";
-?>
+require_once VIEWS . "/about.tpl.php";
