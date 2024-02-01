@@ -3,7 +3,8 @@
     "autoload": {
         "psr-4": {
             "app\\": "app/",
-            "core\\": "core/"
+            "core\\": "core/",
+            "config\\": "config/"
         }
     },
     "authors": [
@@ -12,6 +13,7 @@
         }
     ],
     "require": {
-        "larapack/dd": "^1.1"
+        "larapack/dd": "^1.1",
+        "ext-pdo": "*"
     }
 }
