@@ -1,11 +1,10 @@
 <?php
 
-$db_conf = [
-    'host' => 'localhost',
-    'name' => 'root',
-    'port' => '3306',
+return [
+    'host' => 'site_db',
+    'username' => 'root',
     'password' => 'secret',
-    'db_name' => 'site_db',
+    'dbname' => 'db',
     'charset' => 'utf8',
     'options' => [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

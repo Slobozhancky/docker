@@ -21,7 +21,7 @@ services:
       - php_advanced
 
   site_db:
-    image: "mysql:8.3"
+    image: "mysql:8"
     restart: always
     ports:
       - "33061:3306"

@@ -1,39 +1,15 @@
 <?php
 
 namespace core\classes;
-
 use PDO;
-use PDOException;
 
 class Db
 {
-    private string $host = '127.0.0.1';
-    private string $dbname = 'site_db';
-    private string $username = 'root';
-    private string $password = 'secret';
-    private string $charset = 'utf8';
-
-    private PDO $connection;
-
-    public function __construct()
+    public function __construct(array $db_conf)
     {
-        $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset={$this->charset}";
-
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        try {
-            $this->connection = new PDO($dsn, $this->username, $this->password, $options);
-        } catch (PDOException $e) {
-            throw new PDOException($e->getMessage());
-        }
-    }
-
-    public function getConnection(): PDO
-    {
-        return $this->connection;
+        $dsn = "mysql:host={$db_conf['host']};dbname={$db_conf['dbname']};charset={$db_conf['charset']}";
+        $pdo = new PDO($dsn, $db_conf['username'], $db_conf['password'], $db_conf['options']);
     }
 }
+
+
