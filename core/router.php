@@ -1,9 +1,6 @@
 <?php
 
-/**
- * require_once CONFIG . '/routes.php'; - це шлях до файлу, який збергіає масив зі шляхами нашого роутеру
- */
-require_once CONFIG . '/routes.php';
+
 
 /**
  * trim($_SERVER['REQUEST_URI'], '/'); - це й запис про те, що при вказуванні адреси, в строчці URL вона нам буде показувати інфо, на якій ми зараз знаходимось сторінці
@@ -23,11 +20,17 @@ require_once CONFIG . '/routes.php';
 $uri = trim(parse_url($_SERVER['REQUEST_URI'])['path'], '/');
 
 /**
+ * require_once CONFIG . '/routes.php'; - це шлях до файлу, який збергіає масив зі шляхами нашого роутеру
+ */
+$routes = require CONFIG . '/routes.php';
+
+/**
  * Тут все просто, функція array_key_exists - перевіряє наявність ключа в нашому масиві $routes
  * Ключ ми отримуємо зі змінної $uri
  * Та якщо такий ключ в масиві є, будемо викликати його значення
  * У разі його відсутності, викличемо помилку 404, за допомогою функції aboard()
  */
+
 if (array_key_exists($uri, $routes)){
     require_once CONTROLLERS . "/{$routes[$uri]}";
 } else {
@@ -39,11 +42,3 @@ if (array_key_exists($uri, $routes)){
 
     aboard();
 }
-
-//if ($uri === '') {
-//    require_once CONTROLLERS . '/index.php';
-//} elseif ($uri == "about") {
-//    require_once CONTROLLERS . '/about.php';
-//} elseif ($uri == "post") {
-//    dd("Show post");
-//}
