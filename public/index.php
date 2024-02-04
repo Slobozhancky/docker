@@ -8,9 +8,9 @@ require_once CORE . '/funcs.php';
 /**
  * Підключення до бази
  */
-$dbconf = require CONFIG . '/db_conf.php';
-$db = new Db($dbconf);
-
+$db_config = require CONFIG . '/db_conf.php';
+$db = Db::getInstance();
+$db->connect($db_config);
 
 /**
  * Нижче приведено приклад, простого запиту до бази, щоб витягнути всі пости

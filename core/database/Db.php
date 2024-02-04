@@ -2,9 +2,13 @@
 
 namespace core\database;
 
+use Dotenv\Dotenv;
 use PDO;
 use PDOException;
 use PDOStatement;
+
+$dotenv = Dotenv::createImmutable(ROOT);
+$dotenv->load();
 
 class Db
 {
@@ -12,11 +16,25 @@ class Db
     private PDO $connection;
     private PDOStatement $statement;
 
-    public function __construct(array $db_conf)
+    /**
+     * статична властивість класа $instance, належить йому самому, а не його екземпляру
+     * що і забезпечить нам, присласнення його значення, йому самому, щоб при перевірці
+     * побачити, чи є вже такий створений клас, чи ні
+     */
+    private static $instance;
+
+    private function __construct()
+    {
+    }
+
+    public function connect(): void
     {
         try {
-            $dsn = "mysql:host={$db_conf['host']};dbname={$db_conf['dbname']};charset={$db_conf['charset']}";
-            $this->connection = new PDO($dsn, $db_conf['username'], $db_conf['password'], $db_conf['options']);
+            $dsn = "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']};charset={$_ENV['DB_CHARSET']}";
+            $this->connection = new PDO($dsn, $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]);
 
         } catch (PDOException $e) {
             require_once VIEWS . '/errors/500.tpl.php';
@@ -24,10 +42,20 @@ class Db
         }
     }
 
+    public static function getInstance(): Db
+    {
+        if(self::$instance === null){
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     /**
      * Створили просту функцію query, яка виконує те, що буде відправляти в базу запит
-     * Функція prepare - відповідає за підготовк узапиту
-     * Функція execute - цей запит виконує
+     * Функція prepare - відповідає за підготовку запиту
+     * Функція execute - цей запит виконує, та приймає параметри, які допоможуть нам
+     * позбутись SQL інєкцій
      */
 
     public function query($query, $params = []): Db
