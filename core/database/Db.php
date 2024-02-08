@@ -17,7 +17,7 @@ class Db
     private PDOStatement $statement;
 
     /**
-     * статична властивість класа $instance, належить йому самому, а не його екземпляру
+     * @param $instance - статична властивість класа, належить йому самому, а не його екземпляру
      * що і забезпечить нам, присласнення його значення, йому самому, щоб при перевірці
      * побачити, чи є вже такий створений клас, чи ні
      */
@@ -27,7 +27,7 @@ class Db
     {
     }
 
-    public function connect(): void
+    public function connect(): Db
     {
         try {
             $dsn = "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']};charset={$_ENV['DB_CHARSET']}";
@@ -35,6 +35,8 @@ class Db
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ]);
+
+            return $this;
 
         } catch (PDOException $e) {
             require_once VIEWS . '/errors/500.tpl.php';
@@ -44,7 +46,7 @@ class Db
 
     public static function getInstance(): Db
     {
-        if(self::$instance === null){
+        if(is_null(self::$instance)){
             self::$instance = new self();
         }
 
@@ -53,9 +55,8 @@ class Db
 
     /**
      * Створили просту функцію query, яка виконує те, що буде відправляти в базу запит
-     * Функція prepare - відповідає за підготовку запиту
-     * Функція execute - цей запит виконує, та приймає параметри, які допоможуть нам
-     * позбутись SQL інєкцій
+     * @method prepare - відповідає за підготовку запиту
+     * @method execute - цей запит виконує, та приймає параметри, які допоможуть нам позбутись SQL інєкцій
      */
 
     public function query($query, $params = []): Db
@@ -64,6 +65,10 @@ class Db
         $this->statement->execute($params);
 
         return $this;
+    }
+
+    public function createPost(){
+
     }
 
     public function findAll(): array|bool

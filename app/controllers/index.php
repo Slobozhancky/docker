@@ -6,8 +6,8 @@
 
 use core\database\Db;
 
-$posts = $db->query("SELECT * FROM posts ORDER BY id ASC")->findAll();
-$recent_posts = $db->query("SELECT * FROM posts ORDER BY id ASC LIMIT 3")->findAll();
+$posts = getDbConnection()->query("SELECT * FROM posts ORDER BY id ASC")->findAll();
+$recent_posts = getDbConnection()->query("SELECT * FROM posts ORDER BY id ASC LIMIT 3")->findAll();
 
 $title = 'My blog :: Index';
 

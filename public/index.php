@@ -8,10 +8,7 @@ require_once CORE . '/funcs.php';
 /**
  * Підключення до бази
  */
-$db_config = require CONFIG . '/db_conf.php';
-$db = Db::getInstance();
-$db->connect($db_config);
-
+getDbConnection();
 /**
  * Нижче приведено приклад, простого запиту до бази, щоб витягнути всі пости
  * За що відповідає функція fetchAll()
