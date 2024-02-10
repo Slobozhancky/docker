@@ -38,3 +38,25 @@ function checkFillable(array $fillable = []):array
 
     return $data;
 }
+
+
+/**
+ * @method old -потрібен для того, щоб отримати дані з попереднього введення
+ */
+function old($field_name){
+    return isset($_POST[$field_name]) ? h($_POST[$field_name]) : '';
+}
+
+/**
+ *  нас є така проблема, як внесення полів у бачу, з html кодом, що може впливати на те
+ * що при виводі даних, цей html код буде використано
+ * Тому, щоб цієх проблеми позбутись, є рішення використати функцію htmlspecialchars, але ми
+ * її помістимо у @method h() - який буде приймати строку і вже її транскрибувати
+ *
+ * а другий параметр ENT_QUOTES - дозволяє визначати як одинарні, так і подвійні лапки
+ * */
+
+function h($str): string {
+    return htmlspecialchars($str, ENT_QUOTES);
+}
+

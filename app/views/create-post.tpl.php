@@ -9,7 +9,7 @@
                     <div class="mb-3 has-validation">
                         <label for="exampleFormControlInput1" class="form-label">Title</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" name="title"
-                               placeholder="new title">
+                               placeholder="new title" value="<?php echo old('title')?>">
                         <?php if (empty($errors['title'])): ?>
                             <div class="valid-feedback d-block">
                                 Looks good!
@@ -24,7 +24,7 @@
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Excerpt</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" name="excerpt"
-                               placeholder="new excerpt">
+                               placeholder="new excerpt" value="<?php echo old('excerpt')?>">
 
                         <?php if (empty($errors['excerpt'])): ?>
                             <div class="valid-feedback d-block">
@@ -40,7 +40,7 @@
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">New post</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"
-                                  placeholder="Enter content"></textarea>
+                                  placeholder="<?php echo old('content')?>"></textarea>
 
                         <?php if (empty($errors['content'])): ?>
                             <div class="valid-feedback d-block">
